@@ -6,7 +6,7 @@ In this lesson you will learn important concepts of Javascript by making a simpl
 ##Installation
 Just pull this repo into your computer
 (open up your terminal and don't be afraid!)
-just search up ```terminal``` on your computer and copy and paste this into it:
+Search up ```terminal``` on your computer and copy and paste this into it:
 ```
 git clone https://github.com/curtischong/thacks2016-Javascript-Tutorial.git
 ```
