@@ -13,4 +13,7 @@ git clone https://github.com/curtischong/thacks2016-Javascript-Tutorial.git
 
 Then open up the .html file with a text editor of your choice (right click on the file and select open with)
 
+##Instructions:
+Just replace every ```...``` with the required code. Sometimes it'll be in the comments. By filling out every ```...``` with an appropriate piece of code, you'll complete the task.
+
 After that just listen and follow along! I will release the solutions in this repository after t.hacks 2016 for you to double check your solutions.
