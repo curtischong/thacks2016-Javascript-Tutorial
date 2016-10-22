@@ -58,10 +58,14 @@ function component(width, height, color, x, y, type) {
     this.gravitySpeed = 0;
     //using the SAME STRUCTURE above, lets make our own variables! Call them "speedX and speedY" and assign them both the value of 0
     //...
+    this.speedX = 0;
+    this.speedY = 0;
 
     //You may have noticed the parameters we are passing into this class. Using those parameters, we can set the value of this class' properties
     //make 2 variables called "x and y" and assign them to "x and y". These values come from the parameters
     //...
+    this.x = x;
+    this.y = y;
 
     //this method is in charge of drawing the objects in the canvas. We'll be using this variable to create the scoreboard and the cube
     this.update = function() {
@@ -69,7 +73,7 @@ function component(width, height, color, x, y, type) {
         //to make this update multi purpose, we'll need a bit of control logic to switch between "modes"
         //in JS canvases, there are different functions to draw words on a screen and to fill in areas.
         //for the first 'if' block to run, the "this.text" property must be "text"
-        if (this.type == "text"/*...*/) {
+        if (this.type == "text") {
             ctx.font = this.width + " " + this.height;
             ctx.fillStyle = color;
             ctx.fillText(this.text, this.x, this.y);
@@ -86,6 +90,8 @@ function component(width, height, color, x, y, type) {
         //the code right now checks to see if your cube hits the bottom OR the top. But if you experiment, you'll see that you can fly your cube above the map or below... lets fix that
         //first we need to define two functions checks called "this.hitTop" and "this.hitBottom"
         //...
+        this.hitTop();
+        this.hitBottom();
         //...
     }
     //the variables required are: "myGameArea.canvas.height, this.height, and this.y
@@ -94,6 +100,7 @@ function component(width, height, color, x, y, type) {
 
     this.hitBottom = function() {
       //...
+
     }
 
     this.hitTop = function() {
