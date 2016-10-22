@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+canvas {
+    border:1px solid #d3d3d3;
+    background-color: #f1f1f1;
+}
+</style>
+</head>
+<body onload="startGame()">
+<!--IGNORE EVERYTHING ABOVE THIS-->
+
+
+<script>
+//here we are initializing some JS (Javascript) variables. Note how you don't have to write the variable type
+var myGamePiece;
+var myObstacles = [];
+//now initialize a variable called myScore
+//...
+
+//this method will create the canvas, and set variables for the game to work
+function startGame() {
+    myGamePiece = new component(30, 30, "red", 10, 120);
+    myGamePiece.gravity = 0.05;
+    myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+    myGameArea.start();
+}
+
+//this is known as a Javascript object
+var myGameArea = {
+    //here we are creating a canvas object and assigning it to the canvas property of the object (document.createElement("canvas") returns a pointer to the object)
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 480;
+        this.canvas.height = 270;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.frameNo = 0;
+        this.interval = setInterval(updateGameArea, 20);
+        },
+    //every single frame of animation you see needs to be redrawn by this function
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+
+//this function defines a "class" in Javascript. This of a class as a blueprint that defines what materials make a house
+//these materials are variables and methods that all objects of the same class share
+function component(width, height, color, x, y, type) {
+    //type, score, width, and height and variable names that all "components" have. Here we are defining variables
+    this.type = type;
+    this.score = 0;
+    this.width = width;
+    this.height = height;
+    this.gravity = 0;
+    this.gravitySpeed = 0;
+    //using the SAME STRUCTURE above, lets make our own variables! Call them "speedX and speedY" and assign them both the value of 0
+    //...
+
+    //You may have noticed the parameters we are passing into this class. Using those parameters, we can set the value of this class' properties
+    //make 2 variables called "x and y" and assign them to "x and y". These values come from the parameters
+    //...
+
+    //this method is in charge of drawing the objects in the canvas. We'll be using this variable to create the scoreboard and the cube
+    this.update = function() {
+        ctx = myGameArea.context;
+        //to make this update multi purpose, we'll need a bit of control logic to switch between "modes"
+        //in JS canvases, there are different functions to draw words on a screen and to fill in areas.
+        //for the first 'if' block to run, the "this.text" property must be "text"
+        if (this.type == "text"/*...*/) {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = color;
+            ctx.fillText(this.text, this.x, this.y);
+        } else {
+            ctx.fillStyle = color;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
+    }
+    //this function calculates where your cube should land at each interval. fiddle around with the "this.gravity" variable if you want to make your game harder
+    this.newPos = function() {
+        this.gravitySpeed += this.gravity;
+        this.x += this.speedX;
+        this.y += this.speedY + this.gravitySpeed;
+        //the code right now checks to see if your cube hits the bottom OR the top. But if you experiment, you'll see that you can fly your cube above the map or below... lets fix that
+        //first we need to define two functions checks called "this.hitTop" and "this.hitBottom"
+        //...
+        //...
+    }
+    //the variables required are: "myGameArea.canvas.height, this.height, and this.y
+    //hint: remember the coords (0,0) is on the top left corner and don't forget to set this.gravitySpeed" to zero IF your check succeeds
+
+
+    this.hitBottom = function() {
+      //...
+    }
+
+    this.hitTop = function() {
+      //...
+    }
+
+
+    //this function checks to see if your cube touches a pillar
+    this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+            crash = false;
+        }
+        return crash;
+    }
+}
+
+function updateGameArea() {
+    var x, height, gap, minHeight, maxHeight, minGap, maxGap;
+    for (i = 0; i < myObstacles.length; i += 1) {
+        if (myGamePiece.crashWith(myObstacles[i])) {
+            return;
+        }
+    }
+    myGameArea.clear();
+    myGameArea.frameNo += 1;
+    //every 150 Javascript 150 cycles, we will generate a pillar
+    if (myGameArea.frameNo == 1 || everyinterval(150)) {
+        //we will use this variable as a reference to know where to place objects
+        x = myGameArea.canvas.width;
+        minHeight = 20;
+        maxHeight = 200;
+        height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+        minGap = 50;
+        maxGap = 200;
+        gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+        //this will create the first pillar. Notice the variables being bassed. Refer back to the component class to know what each parameter represents
+        myObstacles.push(new component(10, height, "green", x, 0));
+        //lets make our own pillar. We want the width of the pillar to be the same (10) , the height of it to be "x - height - the gap betwen the two pillars", the colour to be green,
+        //and the y value of the pillar should be "the height of the first pillar + the gap between the pillars"
+        //...
+    }
+    //this will move the obstacles one pixel to the left every cycle
+    //now we need use a for loop to go through every single pillar in the "myObstacles" array and decrease each one of its x-values by 1. Then we call the ".update()" of every pillar
+    //...
+
+    //lets initiate the "myScore.text" property as "SCORE: " 'plus' the frameNo property of myGameArea
+    //don't forget to update the "myScore" property
+    myScore.text="SCORE: " + myGameArea.frameNo;
+    myScore.update();
+
+    //this updates the game piece
+    myGamePiece.newPos();
+    myGamePiece.update();
+}
+
+//this method updates the game intervals
+function everyinterval(n) {
+    if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+    return false;
+}
+
+//this method updates the acceleration from the ACCELERATE button
+function accelerate(n) {
+    myGamePiece.gravity = n;
+}
+</script>
+
+
+
+<!--IGNORE EVERYTHING BELOW THIS-->
+<br>
+<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">ACCELERATE</button>
+<p>Use the ACCELERATE button to stay in the air</p>
+<p>How long can you stay alive?</p>
+</body>
+</html>
