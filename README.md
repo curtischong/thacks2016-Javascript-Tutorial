@@ -21,4 +21,4 @@ Just replace every ```...``` with the required code. Sometimes it'll be in the c
 
 whenever you see ```''```, the word within the brackets usually means a concept where as items within ```""``` means code that can be copied and pasted WITH CARE
 
-After that just listen and follow along! I will release the solutions in this repository after t.hacks 2016 for you to double check your solutions.
+Take a go with the tutorial before checking the solutions. Hope you have fun!
