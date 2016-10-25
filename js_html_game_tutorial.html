@@ -72,8 +72,8 @@ function component(width, height, color, x, y, type) {
         ctx = myGameArea.context;
         //to make this update multi purpose, we'll need a bit of control logic to switch between "modes"
         //in JS canvases, there are different functions to draw words on a screen and to fill in areas.
-        //for the first 'if' block to run, the "this.text" property must be "text"
-        if (this.type == "text") {
+        //for the first 'if' block to run, the "this.type" property must be "text"
+        if (this.type == /*...*/) {
             ctx.font = this.width + " " + this.height;
             ctx.fillStyle = color;
             ctx.fillText(this.text, this.x, this.y);
